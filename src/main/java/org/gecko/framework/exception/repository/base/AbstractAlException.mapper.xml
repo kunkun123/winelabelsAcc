@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.gecko.framework.exception.repository.dao.AlExceptionDao">
+	<resultMap id="AlException" type="org.gecko.framework.exception.entity.AlException">
+		<result property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="temp4" column="TEMP4" jdbcType="VARCHAR" />
+		<result property="temp3" column="TEMP3" jdbcType="VARCHAR" />
+		<result property="temp2" column="TEMP2" jdbcType="VARCHAR" />
+		<result property="temp1" column="TEMP1" jdbcType="VARCHAR" />
+		<result property="lastupdate" column="LASTUPDATE" jdbcType="DATE" />
+		<result property="creator" column="CREATOR" jdbcType="VARCHAR" />
+		<result property="occurdate" column="OCCURDATE" jdbcType="DATE" />
+		<result property="reason" column="REASON" jdbcType="VARCHAR" />
+		<result property="serial" column="SERIAL" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="count" resultType="int" parameterType="org.gecko.framework.exception.entity.AlException">
+		select count(*) from AL_EXCEPTION t where 1=1
+	</select>
+	
+	<select id="get" resultMap="AlException" parameterType="String">
+		select  AlException.* from AL_EXCEPTION AlException where AlException.ID = #{id}
+	</select>
+
+	<insert id="save" parameterType="org.gecko.framework.exception.entity.AlException">	
+ 		insert into AL_EXCEPTION(ID,TEMP4,TEMP3,TEMP2,TEMP1,LASTUPDATE,CREATOR,OCCURDATE,REASON,SERIAL)
+ 		VALUES(#{id},#{temp4,jdbcType=VARCHAR},#{temp3,jdbcType=VARCHAR},#{temp2,jdbcType=VARCHAR},#{temp1,jdbcType=VARCHAR},#{lastupdate,jdbcType=DATE},#{creator,jdbcType=VARCHAR},#{occurdate,jdbcType=DATE},#{reason,jdbcType=VARCHAR},#{serial,jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="batchSave" parameterType="java.util.List">	
+ 		insert into AL_EXCEPTION(ID,TEMP4,TEMP3,TEMP2,TEMP1,LASTUPDATE,CREATOR,OCCURDATE,REASON,SERIAL)
+		values
+		<foreach item="o" collection="list"  separator="," >
+ 		(#{o.id},#{o.temp4,jdbcType=VARCHAR},#{o.temp3,jdbcType=VARCHAR},#{o.temp2,jdbcType=VARCHAR},#{o.temp1,jdbcType=VARCHAR},#{o.lastupdate,jdbcType=DATE},#{o.creator,jdbcType=VARCHAR},#{o.occurdate,jdbcType=DATE},#{o.reason,jdbcType=VARCHAR},#{o.serial,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+	<update id="update" parameterType="org.gecko.framework.exception.entity.AlException">
+    		update AL_EXCEPTION set TEMP4=#{temp4}, TEMP3=#{temp3}, TEMP2=#{temp2}, TEMP1=#{temp1}, LASTUPDATE=#{lastupdate}, CREATOR=#{creator}, OCCURDATE=#{occurdate}, REASON=#{reason}, SERIAL=#{serial} where ID=#{id}
+	</update>
+	<delete id="delete" parameterType="org.gecko.framework.exception.entity.AlException">
+		delete from AL_EXCEPTION where ID=#{id}
+	</delete>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from AL_EXCEPTION where ID=#{id}
+	</delete>
+	
+	<delete id="batchDelete">
+		delete from AL_EXCEPTION where ID in
+		<foreach item="ids" collection="array" open="(" separator="," close=")" >#{ids}</foreach>
+	</delete>
+	
+	<delete id="batchDeleteBy">
+        delete from AL_EXCEPTION where         <if test="temp4!=null">and TEMP4 = #{temp4}</if><if test="temp3!=null">and TEMP3 = #{temp3}</if><if test="temp2!=null">and TEMP2 = #{temp2}</if><if test="temp1!=null">and TEMP1 = #{temp1}</if><if test="lastupdate!=null">and LASTUPDATE = #{lastupdate}</if><if test="creator!=null">and CREATOR = #{creator}</if><if test="occurdate!=null">and OCCURDATE = #{occurdate}</if><if test="reason!=null">and REASON = #{reason}</if><if test="serial!=null">and SERIAL = #{serial}</if>    </delete>
+
+    <select id="find" resultMap="AlException" parameterType="org.gecko.framework.exception.entity.AlException">
+        select AlException.* from AL_EXCEPTION AlException where 1=1 <if test="id!=null">and ID=#{id}</if>
+        <if test="temp4!=null"> and TEMP4 = #{temp4} </if><if test="temp3!=null"> and TEMP3 = #{temp3} </if><if test="temp2!=null"> and TEMP2 = #{temp2} </if><if test="temp1!=null"> and TEMP1 = #{temp1} </if><if test="lastupdate!=null"> and LASTUPDATE = #{lastupdate} </if><if test="creator!=null"> and CREATOR = #{creator} </if><if test="occurdate!=null"> and OCCURDATE = #{occurdate} </if><if test="reason!=null"> and REASON = #{reason} </if><if test="serial!=null"> and SERIAL = #{serial} </if>    </select>
+
+	<select id="findByPage" resultMap="AlException" parameterType="org.gecko.framework.exception.entity.AlException">
+		select AlException.* from AL_EXCEPTION AlException where 1=1 <if test="param.id!=null">and ID=#{id}</if>
+		<if test="param.temp4!=null"> and TEMP4 = #{param.temp4} </if><if test="param.temp3!=null"> and TEMP3 = #{param.temp3} </if><if test="param.temp2!=null"> and TEMP2 = #{param.temp2} </if><if test="param.temp1!=null"> and TEMP1 = #{param.temp1} </if><if test="param.lastupdate!=null"> and LASTUPDATE = #{param.lastupdate} </if><if test="param.creator!=null"> and CREATOR = #{param.creator} </if><if test="param.occurdate!=null"> and OCCURDATE = #{param.occurdate} </if><if test="param.reason!=null"> and REASON = #{param.reason} </if><if test="param.serial!=null"> and SERIAL = #{param.serial} </if>	</select>
+
+    <select id="likeByPage" resultMap="AlException" parameterType="org.gecko.framework.exception.entity.AlException">
+        select AlException.* from AL_EXCEPTION AlException where 1=1
+        <if test="param.temp4!=null"> and TEMP4 like #{param.temp4}</if><if test="param.temp3!=null"> and TEMP3 like #{param.temp3}</if><if test="param.temp2!=null"> and TEMP2 like #{param.temp2}</if><if test="param.temp1!=null"> and TEMP1 like #{param.temp1}</if><if test="param.lastupdate!=null"> and LASTUPDATE like #{param.lastupdate}</if><if test="param.creator!=null"> and CREATOR like #{param.creator}</if><if test="param.occurdate!=null"> and OCCURDATE like #{param.occurdate}</if><if test="param.reason!=null"> and REASON like #{param.reason}</if><if test="param.serial!=null"> and SERIAL like #{param.serial}</if>    </select>
+
+    <update id="updateField" parameterType="String">
+        UPDATE AL_EXCEPTION SET ${field} = #{value} WHERE ID = #{pk}
+    </update>
+</mapper>

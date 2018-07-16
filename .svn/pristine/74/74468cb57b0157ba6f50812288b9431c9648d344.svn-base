@@ -1,0 +1,119 @@
+/**
+ * ent-ententbasic
+ */
+$(function () {
+    $("#entbasicTable").bootstrapTable({
+        //toolbar: "#toolbar",
+        idField: "id",
+        pagination: true,
+        queryParams:queryParams,
+        sidePagination: "client",
+        pageNumber: 1,
+        pageSize: 5,
+        pageList: [5, 10, 20],
+        url: "/ent/ententbasic/auditlist",
+        columns: [
+            [{
+                "title": "<img src='/static/scripts/gecko-modules/img/u152.png' class='img-rounded' >企业列表",
+                "halign":"left",
+                "align":"center",
+                "colspan": 15
+            }],
+            [{
+                field: "id",
+                visible: false
+            }, {
+                field: "creditcode",
+                title: "统一社会信用代码",
+                type: "text",
+                search: "true"
+
+            }, {
+                field: "entname",
+                title: "企业名称",
+                type: "text",
+                search: "true",
+
+
+            }, {
+                field: "audittype",
+                title: "审核类型",
+                type: "text",
+                search: "true",
+
+
+            }, {
+                field: "temp2",
+                title: "审核状态",
+                type: "text",
+                search: "true",
+
+
+            }, {
+                field: 'operate',
+                title: '操作',
+                align: 'center',
+                width : 100,
+                //events: operateEvents,
+                formatter: operateFormatter
+            }]]
+
+    });
+
+});
+
+function operateFormatter(value, row, index) {
+	var obj = JSON.stringify(row);
+    return [
+        "<button onclick='javascript:view("+obj+");' type='button' class='btn btn-link' style='margin-right:15px;'>查看</button>&nbsp;&nbsp;"+
+        "<button onclick='javascript:auditing("+obj+");' type='button' class='btn btn-link' style='margin-right:15px;'>审核</button>&nbsp;&nbsp;"
+    ];
+
+
+};
+
+function query(){
+    $('#entbasicTable').bootstrapTable('refresh');
+}
+
+function queryParams(params) {
+    var param = {
+        creditcode : $("#creditcode").val(),
+        entname : $("#entname").val()
+    }
+    return param;
+}
+function auditing(obj){
+	$("[name='producepermissionurl']").attr("src",accPath+"/"+obj.producepermissionurl);
+	$("[name='importpermissionurl']").attr("src",accPath+"/"+obj.importpermissionurl);
+	$("[name='sellpermissionurl']").attr("src",accPath+"/"+obj.sellpermissionurl);
+	$("[name='businesspermissionurl']").attr("src",accPath+"/"+obj.businesspermissionurl);
+	$("[name='licenseattach']").attr("src",accPath+"/"+obj.licenseattach);
+	$("[name='creditcode1']").val(obj.creditcode);
+	$("[name='entname1']").val(obj.entname);
+	$("[name='address']").val(obj.address);
+	$("[name='tel']").val(obj.tel);
+	$("[name='bank']").val(obj.bank);
+	$("[name='acct']").val(obj.acct);  
+	$("#editEntId").val(obj.id);
+	$("#editAuditModel").modal("show");
+}
+function view(obj){
+	console.log(obj);
+	$("[name='producepermissionurl']").attr("src",accPath+"/"+obj.producepermissionurl);
+	$("[name='importpermissionurl']").attr("src",accPath+"/"+obj.importpermissionurl);
+	$("[name='sellpermissionurl']").attr("src",accPath+"/"+obj.sellpermissionurl);
+	$("[name='businesspermissionurl']").attr("src",accPath+"/"+obj.businesspermissionurl);
+	$("[name='licenseattach']").attr("src",accPath+"/"+obj.licenseattach);
+	$("[name='creditcode1']").val(obj.creditcode);
+	$("[name='entname1']").val(obj.entname);
+	$("[name='address']").val(obj.address);
+	$("[name='tel']").val(obj.tel);
+	$("[name='bank']").val(obj.bank);
+	$("[name='acct']").val(obj.acct);   
+	$("[name='contacts']").val(obj.contacts);
+	$("[name='contactphone']").val(obj.contactphone);
+	$("[name='email']").val(obj.email);
+//	$("#creditcode").html(obj.creditcode);
+	$("#myDetailModal").modal("show");
+}

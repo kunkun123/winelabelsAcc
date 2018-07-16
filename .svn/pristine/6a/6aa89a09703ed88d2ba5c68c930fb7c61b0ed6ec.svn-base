@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.gecko.framework.param.repository.dao.ExceedparamDao">
+	<resultMap id="Exceedparam" type="org.gecko.framework.param.entity.Exceedparam">
+		<result property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="yellowyear" column="YELLOWYEAR" jdbcType="VARCHAR" />
+		<result property="creatorid" column="creatorId" jdbcType="VARCHAR" />
+		<result property="importyear" column="IMPORTYEAR" jdbcType="VARCHAR" />
+		<result property="createdate" column="createDate" jdbcType="DATE" />
+		<result property="temp1" column="TEMP1" jdbcType="VARCHAR" />
+		<result property="whiteyear" column="WHITEYEAR" jdbcType="VARCHAR" />
+		<result property="redyear" column="REDYEAR" jdbcType="VARCHAR" />
+		<result property="beeryear" column="BEERYEAR" jdbcType="VARCHAR" />
+		<result property="temp3" column="TEMP3" jdbcType="VARCHAR" />
+		<result property="temp4" column="TEMP4" jdbcType="VARCHAR" />
+		<result property="temp2" column="TEMP2" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="count" resultType="int" parameterType="org.gecko.framework.param.entity.Exceedparam">
+		select count(*) from EXCEEDPARAM t where 1=1
+	</select>
+	
+	<select id="get" resultMap="Exceedparam" parameterType="String">
+		select  Exceedparam.* from EXCEEDPARAM Exceedparam where Exceedparam.ID = #{id}
+	</select>
+
+	<insert id="save" parameterType="org.gecko.framework.param.entity.Exceedparam">	
+ 		insert into EXCEEDPARAM(ID,YELLOWYEAR,IMPORTYEAR,TEMP1,WHITEYEAR,REDYEAR,BEERYEAR,TEMP3,TEMP4,TEMP2)
+ 		VALUES(#{id},#{yellowyear,jdbcType=VARCHAR},#{importyear,jdbcType=VARCHAR},#{temp1,jdbcType=VARCHAR},#{whiteyear,jdbcType=VARCHAR},#{redyear,jdbcType=VARCHAR},#{beeryear,jdbcType=VARCHAR},#{temp3,jdbcType=VARCHAR},#{temp4,jdbcType=VARCHAR},#{temp2,jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="batchSave" parameterType="java.util.List">	
+ 		insert into EXCEEDPARAM(ID,YELLOWYEAR,creatorId,IMPORTYEAR,createDate,TEMP1,WHITEYEAR,REDYEAR,BEERYEAR,TEMP3,TEMP4,TEMP2)
+		values
+		<foreach item="o" collection="list"  separator="," >
+ 		(#{o.id},#{o.yellowyear,jdbcType=VARCHAR},#{o.creatorid,jdbcType=VARCHAR},#{o.importyear,jdbcType=VARCHAR},#{o.createdate,jdbcType=DATE},#{o.temp1,jdbcType=VARCHAR},#{o.whiteyear,jdbcType=VARCHAR},#{o.redyear,jdbcType=VARCHAR},#{o.beeryear,jdbcType=VARCHAR},#{o.temp3,jdbcType=VARCHAR},#{o.temp4,jdbcType=VARCHAR},#{o.temp2,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+	<update id="update" parameterType="org.gecko.framework.param.entity.Exceedparam">
+    		update EXCEEDPARAM set YELLOWYEAR=#{yellowyear,jdbcType=VARCHAR}, IMPORTYEAR=#{importyear,jdbcType=VARCHAR},TEMP1=#{temp1,jdbcType=VARCHAR}, WHITEYEAR=#{whiteyear,jdbcType=VARCHAR}, REDYEAR=#{redyear,jdbcType=VARCHAR}, BEERYEAR=#{beeryear,jdbcType=VARCHAR}, TEMP3=#{temp3,jdbcType=VARCHAR}, TEMP4=#{temp4,jdbcType=VARCHAR}, TEMP2=#{temp2,jdbcType=VARCHAR} where ID=#{id,jdbcType=VARCHAR}
+	</update>
+	<delete id="delete" parameterType="org.gecko.framework.param.entity.Exceedparam">
+		delete from EXCEEDPARAM where ID=#{id}
+	</delete>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from EXCEEDPARAM where ID=#{id}
+	</delete>
+	
+	<delete id="batchDelete">
+		delete from EXCEEDPARAM where ID in
+		<foreach item="ids" collection="array" open="(" separator="," close=")" >#{ids}</foreach>
+	</delete>
+	
+	<delete id="batchDeleteBy">
+        delete from EXCEEDPARAM where         <if test="yellowyear!=null">and YELLOWYEAR = #{yellowyear}</if><if test="creatorid!=null">and creatorId = #{creatorid}</if><if test="importyear!=null">and IMPORTYEAR = #{importyear}</if><if test="createdate!=null">and createDate = #{createdate}</if><if test="temp1!=null">and TEMP1 = #{temp1}</if><if test="whiteyear!=null">and WHITEYEAR = #{whiteyear}</if><if test="redyear!=null">and REDYEAR = #{redyear}</if><if test="beeryear!=null">and BEERYEAR = #{beeryear}</if><if test="temp3!=null">and TEMP3 = #{temp3}</if><if test="temp4!=null">and TEMP4 = #{temp4}</if><if test="temp2!=null">and TEMP2 = #{temp2}</if>    </delete>
+
+    <select id="find" resultMap="Exceedparam" parameterType="org.gecko.framework.param.entity.Exceedparam">
+        select Exceedparam.* from EXCEEDPARAM Exceedparam where 1=1 <if test="id!=null">and ID=#{id}</if>
+        <if test="yellowyear!=null"> and YELLOWYEAR = #{yellowyear} </if><if test="creatorid!=null"> and creatorId = #{creatorid} </if><if test="importyear!=null"> and IMPORTYEAR = #{importyear} </if><if test="createdate!=null"> and createDate = #{createdate} </if><if test="temp1!=null"> and TEMP1 = #{temp1} </if><if test="whiteyear!=null"> and WHITEYEAR = #{whiteyear} </if><if test="redyear!=null"> and REDYEAR = #{redyear} </if><if test="beeryear!=null"> and BEERYEAR = #{beeryear} </if><if test="temp3!=null"> and TEMP3 = #{temp3} </if><if test="temp4!=null"> and TEMP4 = #{temp4} </if><if test="temp2!=null"> and TEMP2 = #{temp2} </if>    </select>
+
+	<select id="findByPage" resultMap="Exceedparam" parameterType="org.gecko.framework.param.entity.Exceedparam">
+		select Exceedparam.* from EXCEEDPARAM Exceedparam where 1=1 <if test="param.id!=null">and ID=#{id}</if>
+		<if test="param.yellowyear!=null"> and YELLOWYEAR = #{param.yellowyear} </if><if test="param.creatorid!=null"> and creatorId = #{param.creatorid} </if><if test="param.importyear!=null"> and IMPORTYEAR = #{param.importyear} </if><if test="param.createdate!=null"> and createDate = #{param.createdate} </if><if test="param.temp1!=null"> and TEMP1 = #{param.temp1} </if><if test="param.whiteyear!=null"> and WHITEYEAR = #{param.whiteyear} </if><if test="param.redyear!=null"> and REDYEAR = #{param.redyear} </if><if test="param.beeryear!=null"> and BEERYEAR = #{param.beeryear} </if><if test="param.temp3!=null"> and TEMP3 = #{param.temp3} </if><if test="param.temp4!=null"> and TEMP4 = #{param.temp4} </if><if test="param.temp2!=null"> and TEMP2 = #{param.temp2} </if>	</select>
+
+    <select id="likeByPage" resultMap="Exceedparam" parameterType="org.gecko.framework.param.entity.Exceedparam">
+        select Exceedparam.* from EXCEEDPARAM Exceedparam where 1=1
+        <if test="param.yellowyear!=null"> and YELLOWYEAR like #{param.yellowyear}</if><if test="param.creatorid!=null"> and creatorId like #{param.creatorid}</if><if test="param.importyear!=null"> and IMPORTYEAR like #{param.importyear}</if><if test="param.createdate!=null"> and createDate like #{param.createdate}</if><if test="param.temp1!=null"> and TEMP1 like #{param.temp1}</if><if test="param.whiteyear!=null"> and WHITEYEAR like #{param.whiteyear}</if><if test="param.redyear!=null"> and REDYEAR like #{param.redyear}</if><if test="param.beeryear!=null"> and BEERYEAR like #{param.beeryear}</if><if test="param.temp3!=null"> and TEMP3 like #{param.temp3}</if><if test="param.temp4!=null"> and TEMP4 like #{param.temp4}</if><if test="param.temp2!=null"> and TEMP2 like #{param.temp2}</if>    </select>
+
+    <update id="updateField" parameterType="String">
+        UPDATE EXCEEDPARAM SET ${field} = #{value} WHERE ID = #{pk}
+    </update>
+</mapper>

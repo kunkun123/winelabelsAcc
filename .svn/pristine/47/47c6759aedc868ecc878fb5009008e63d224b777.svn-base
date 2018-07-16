@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.gecko.framework.param.repository.dao.FinishtaxcontrolDao">
+	<resultMap id="Finishtaxcontrol" type="org.gecko.framework.param.entity.Finishtaxcontrol">
+		<result property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="credit" column="credit" jdbcType="VARCHAR" />
+		<result property="ent" column="ent" jdbcType="VARCHAR" />
+		<result property="finish" column="finish" jdbcType="VARCHAR" />
+		<result property="year" column="year" jdbcType="VARCHAR" />
+		<result property="month" column="month" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="count" resultType="int" parameterType="org.gecko.framework.param.entity.Finishtaxcontrol">
+		select count(*) from FINISHTAXCONTROL t where 1=1
+	</select>
+	
+	<select id="get" resultMap="Finishtaxcontrol" parameterType="String">
+		select  Finishtaxcontrol.* from FINISHTAXCONTROL Finishtaxcontrol where Finishtaxcontrol.ID = #{id}
+	</select>
+
+	<insert id="save" parameterType="org.gecko.framework.param.entity.Finishtaxcontrol">	
+ 		insert into FINISHTAXCONTROL(ID,credit,ent,finish,year,month)
+ 		VALUES(#{id},#{credit,jdbcType=VARCHAR},#{ent,jdbcType=VARCHAR},#{finish,jdbcType=VARCHAR},#{year,jdbcType=VARCHAR},#{month,jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="batchSave" parameterType="java.util.List">	
+ 		insert into FINISHTAXCONTROL(ID,credit,ent,finish,year,month)
+		values
+		<foreach item="o" collection="list"  separator="," >
+ 		(#{o.id},#{o.credit,jdbcType=VARCHAR},#{o.ent,jdbcType=VARCHAR},#{o.finish,jdbcType=VARCHAR},#{o.year,jdbcType=VARCHAR},#{o.month,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+	<update id="update" parameterType="org.gecko.framework.param.entity.Finishtaxcontrol">
+    		update FINISHTAXCONTROL set credit=#{credit}, ent=#{ent}, finish=#{finish}, year=#{year}, month=#{month} where ID=#{id}
+	</update>
+	<delete id="delete" parameterType="org.gecko.framework.param.entity.Finishtaxcontrol">
+		delete from FINISHTAXCONTROL where ID=#{id}
+	</delete>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from FINISHTAXCONTROL where ID=#{id}
+	</delete>
+	
+	<delete id="batchDelete">
+		delete from FINISHTAXCONTROL where ID in
+		<foreach item="ids" collection="array" open="(" separator="," close=")" >#{ids}</foreach>
+	</delete>
+	
+	<delete id="batchDeleteBy">
+        delete from FINISHTAXCONTROL where         <if test="credit!=null">and credit = #{credit}</if><if test="ent!=null">and ent = #{ent}</if><if test="finish!=null">and finish = #{finish}</if><if test="year!=null">and year = #{year}</if><if test="month!=null">and month = #{month}</if>    </delete>
+
+    <select id="find" resultMap="Finishtaxcontrol" parameterType="org.gecko.framework.param.entity.Finishtaxcontrol">
+        select Finishtaxcontrol.* from FINISHTAXCONTROL Finishtaxcontrol where 1=1 <if test="id!=null">and ID=#{id}</if>
+        <if test="credit!=null"> and credit = #{credit} </if><if test="ent!=null"> and ent = #{ent} </if><if test="finish!=null"> and finish = #{finish} </if><if test="year!=null"> and year = #{year} </if><if test="month!=null"> and month = #{month} </if>    </select>
+
+	<select id="findByPage" resultMap="Finishtaxcontrol" parameterType="org.gecko.framework.param.entity.Finishtaxcontrol">
+		select Finishtaxcontrol.* from FINISHTAXCONTROL Finishtaxcontrol where 1=1 <if test="param.id!=null">and ID=#{id}</if>
+		<if test="param.credit!=null"> and credit = #{param.credit} </if><if test="param.ent!=null"> and ent = #{param.ent} </if><if test="param.finish!=null"> and finish = #{param.finish} </if><if test="param.year!=null"> and year = #{param.year} </if><if test="param.month!=null"> and month = #{param.month} </if>	</select>
+
+    <select id="likeByPage" resultMap="Finishtaxcontrol" parameterType="org.gecko.framework.param.entity.Finishtaxcontrol">
+        select Finishtaxcontrol.* from FINISHTAXCONTROL Finishtaxcontrol where 1=1
+        <if test="param.credit!=null"> and credit like #{param.credit}</if><if test="param.ent!=null"> and ent like #{param.ent}</if><if test="param.finish!=null"> and finish like #{param.finish}</if><if test="param.year!=null"> and year like #{param.year}</if><if test="param.month!=null"> and month like #{param.month}</if>    </select>
+
+    <update id="updateField" parameterType="String">
+        UPDATE FINISHTAXCONTROL SET ${field} = #{value} WHERE ID = #{pk}
+    </update>
+</mapper>

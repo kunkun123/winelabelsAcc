@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.gecko.framework.param.repository.dao.ExceedcontrolDao">
+	<resultMap id="Exceedcontrol" type="org.gecko.framework.param.entity.Exceedcontrol">
+		<result property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="credit" column="CREDIT" jdbcType="VARCHAR" />
+		<result property="ent" column="ENT" jdbcType="VARCHAR" />
+		<result property="total" column="TOTAL" jdbcType="VARCHAR" />
+		<result property="white" column="WHITE" jdbcType="VARCHAR" />
+		<result property="yellow" column="YELLOW" jdbcType="VARCHAR" />
+		<result property="beer" column="BEER" jdbcType="VARCHAR" />
+		<result property="other" column="OTHER" jdbcType="VARCHAR" />
+		<result property="status" column="STATUS" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="count" resultType="int" parameterType="org.gecko.framework.param.entity.Exceedcontrol">
+		select count(*) from EXCEEDCONTROL t where 1=1
+	</select>
+	
+	<select id="get" resultMap="Exceedcontrol" parameterType="String">
+		select  Exceedcontrol.* from EXCEEDCONTROL Exceedcontrol where Exceedcontrol.ID = #{id}
+	</select>
+
+	<insert id="save" parameterType="org.gecko.framework.param.entity.Exceedcontrol">	
+ 		insert into EXCEEDCONTROL(ID,CREDIT,ENT,TOTAL,WHITE,YELLOW,BEER,OTHER,STATUS)
+ 		VALUES(#{id},#{credit,jdbcType=VARCHAR},#{ent,jdbcType=VARCHAR},#{total,jdbcType=VARCHAR},#{white,jdbcType=VARCHAR},#{yellow,jdbcType=VARCHAR},#{beer,jdbcType=VARCHAR},#{other,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="batchSave" parameterType="java.util.List">	
+ 		insert into EXCEEDCONTROL(ID,CREDIT,ENT,TOTAL,WHITE,YELLOW,BEER,OTHER,STATUS)
+		values
+		<foreach item="o" collection="list"  separator="," >
+ 		(#{o.id},#{o.credit,jdbcType=VARCHAR},#{o.ent,jdbcType=VARCHAR},#{o.total,jdbcType=VARCHAR},#{o.white,jdbcType=VARCHAR},#{o.yellow,jdbcType=VARCHAR},#{o.beer,jdbcType=VARCHAR},#{o.other,jdbcType=VARCHAR},#{o.status,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+	<update id="update" parameterType="org.gecko.framework.param.entity.Exceedcontrol">
+    		update EXCEEDCONTROL set CREDIT=#{credit}, ENT=#{ent}, TOTAL=#{total}, WHITE=#{white}, YELLOW=#{yellow}, BEER=#{beer}, OTHER=#{other}, STATUS=#{status} where ID=#{id}
+	</update>
+	<delete id="delete" parameterType="org.gecko.framework.param.entity.Exceedcontrol">
+		delete from EXCEEDCONTROL where ID=#{id}
+	</delete>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from EXCEEDCONTROL where ID=#{id}
+	</delete>
+	
+	<delete id="batchDelete">
+		delete from EXCEEDCONTROL where ID in
+		<foreach item="ids" collection="array" open="(" separator="," close=")" >#{ids}</foreach>
+	</delete>
+	
+	<delete id="batchDeleteBy">
+        delete from EXCEEDCONTROL where         <if test="credit!=null">and CREDIT = #{credit}</if><if test="ent!=null">and ENT = #{ent}</if><if test="total!=null">and TOTAL = #{total}</if><if test="white!=null">and WHITE = #{white}</if><if test="yellow!=null">and YELLOW = #{yellow}</if><if test="beer!=null">and BEER = #{beer}</if><if test="other!=null">and OTHER = #{other}</if><if test="status!=null">and STATUS = #{status}</if>    </delete>
+
+    <select id="find" resultMap="Exceedcontrol" parameterType="org.gecko.framework.param.entity.Exceedcontrol">
+        select Exceedcontrol.* from EXCEEDCONTROL Exceedcontrol where 1=1 <if test="id!=null">and ID=#{id}</if>
+        <if test="credit!=null"> and CREDIT = #{credit} </if><if test="ent!=null"> and ENT = #{ent} </if><if test="total!=null"> and TOTAL = #{total} </if><if test="white!=null"> and WHITE = #{white} </if><if test="yellow!=null"> and YELLOW = #{yellow} </if><if test="beer!=null"> and BEER = #{beer} </if><if test="other!=null"> and OTHER = #{other} </if><if test="status!=null"> and STATUS = #{status} </if>    </select>
+
+	<select id="findByPage" resultMap="Exceedcontrol" parameterType="org.gecko.framework.param.entity.Exceedcontrol">
+		select Exceedcontrol.* from EXCEEDCONTROL Exceedcontrol where 1=1 <if test="param.id!=null">and ID=#{id}</if>
+		<if test="param.credit!=null"> and CREDIT = #{param.credit} </if><if test="param.ent!=null"> and ENT = #{param.ent} </if><if test="param.total!=null"> and TOTAL = #{param.total} </if><if test="param.white!=null"> and WHITE = #{param.white} </if><if test="param.yellow!=null"> and YELLOW = #{param.yellow} </if><if test="param.beer!=null"> and BEER = #{param.beer} </if><if test="param.other!=null"> and OTHER = #{param.other} </if><if test="param.status!=null"> and STATUS = #{param.status} </if>	</select>
+
+    <select id="likeByPage" resultMap="Exceedcontrol" parameterType="org.gecko.framework.param.entity.Exceedcontrol">
+        select Exceedcontrol.* from EXCEEDCONTROL Exceedcontrol where 1=1
+        <if test="param.credit!=null"> and CREDIT like #{param.credit}</if><if test="param.ent!=null"> and ENT like #{param.ent}</if><if test="param.total!=null"> and TOTAL like #{param.total}</if><if test="param.white!=null"> and WHITE like #{param.white}</if><if test="param.yellow!=null"> and YELLOW like #{param.yellow}</if><if test="param.beer!=null"> and BEER like #{param.beer}</if><if test="param.other!=null"> and OTHER like #{param.other}</if><if test="param.status!=null"> and STATUS like #{param.status}</if>    </select>
+
+    <update id="updateField" parameterType="String">
+        UPDATE EXCEEDCONTROL SET ${field} = #{value} WHERE ID = #{pk}
+    </update>
+</mapper>

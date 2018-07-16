@@ -1,0 +1,25 @@
+{
+  "serviceStep" : 100000,
+  "services" : {
+    "exception" : {
+      "serviceName" : "exception",
+      "startIndex" : 100000,
+      "entities" : {
+        "AL_EXCEPTION" : {
+          "entityName" : "AL_EXCEPTION",
+          "startIndex" : 100
+        }
+      }
+    },
+    "param" : {
+      "serviceName" : "param",
+      "startIndex" : 200000,
+      "entities" : {
+        "EXCEEDPARAM" : {
+          "entityName" : "EXCEEDPARAM",
+          "startIndex" : 100
+        }
+      }
+    }
+  }
+}

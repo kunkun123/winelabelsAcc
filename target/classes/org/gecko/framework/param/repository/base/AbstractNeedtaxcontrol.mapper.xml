@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.gecko.framework.param.repository.dao.NeedtaxcontrolDao">
+	<resultMap id="Needtaxcontrol" type="org.gecko.framework.param.entity.Needtaxcontrol">
+		<result property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="other" column="OTHER" jdbcType="VARCHAR" />
+		<result property="deadline" column="DEADLINE" jdbcType="DATE" />
+		<result property="beer" column="BEER" jdbcType="VARCHAR" />
+		<result property="yellow" column="YELLOW" jdbcType="VARCHAR" />
+		<result property="white" column="WHITE" jdbcType="VARCHAR" />
+		<result property="needtax" column="NEEDTAX" jdbcType="VARCHAR" />
+		<result property="ent" column="ENT" jdbcType="VARCHAR" />
+		<result property="credit" column="CREDIT_" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="count" resultType="int" parameterType="org.gecko.framework.param.entity.Needtaxcontrol">
+		select count(*) from NEEDTAXCONTROL t where 1=1
+	</select>
+	
+	<select id="get" resultMap="Needtaxcontrol" parameterType="String">
+		select  Needtaxcontrol.* from NEEDTAXCONTROL Needtaxcontrol where Needtaxcontrol.ID = #{id}
+	</select>
+
+	<insert id="save" parameterType="org.gecko.framework.param.entity.Needtaxcontrol">	
+ 		insert into NEEDTAXCONTROL(ID,OTHER,DEADLINE,BEER,YELLOW,WHITE,NEEDTAX,ENT,CREDIT_)
+ 		VALUES(#{id},#{other,jdbcType=VARCHAR},#{deadline,jdbcType=DATE},#{beer,jdbcType=VARCHAR},#{yellow,jdbcType=VARCHAR},#{white,jdbcType=VARCHAR},#{needtax,jdbcType=VARCHAR},#{ent,jdbcType=VARCHAR},#{credit,jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="batchSave" parameterType="java.util.List">	
+ 		insert into NEEDTAXCONTROL(ID,OTHER,DEADLINE,BEER,YELLOW,WHITE,NEEDTAX,ENT,CREDIT_)
+		values
+		<foreach item="o" collection="list"  separator="," >
+ 		(#{o.id},#{o.other,jdbcType=VARCHAR},#{o.deadline,jdbcType=DATE},#{o.beer,jdbcType=VARCHAR},#{o.yellow,jdbcType=VARCHAR},#{o.white,jdbcType=VARCHAR},#{o.needtax,jdbcType=VARCHAR},#{o.ent,jdbcType=VARCHAR},#{o.credit,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+	<update id="update" parameterType="org.gecko.framework.param.entity.Needtaxcontrol">
+    		update NEEDTAXCONTROL set OTHER=#{other}, DEADLINE=#{deadline}, BEER=#{beer}, YELLOW=#{yellow}, WHITE=#{white}, NEEDTAX=#{needtax}, ENT=#{ent}, CREDIT_=#{credit} where ID=#{id}
+	</update>
+	<delete id="delete" parameterType="org.gecko.framework.param.entity.Needtaxcontrol">
+		delete from NEEDTAXCONTROL where ID=#{id}
+	</delete>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from NEEDTAXCONTROL where ID=#{id}
+	</delete>
+	
+	<delete id="batchDelete">
+		delete from NEEDTAXCONTROL where ID in
+		<foreach item="ids" collection="array" open="(" separator="," close=")" >#{ids}</foreach>
+	</delete>
+	
+	<delete id="batchDeleteBy">
+        delete from NEEDTAXCONTROL where         <if test="other!=null">and OTHER = #{other}</if><if test="deadline!=null">and DEADLINE = #{deadline}</if><if test="beer!=null">and BEER = #{beer}</if><if test="yellow!=null">and YELLOW = #{yellow}</if><if test="white!=null">and WHITE = #{white}</if><if test="needtax!=null">and NEEDTAX = #{needtax}</if><if test="ent!=null">and ENT = #{ent}</if><if test="credit!=null">and CREDIT_ = #{credit}</if>    </delete>
+
+    <select id="find" resultMap="Needtaxcontrol" parameterType="org.gecko.framework.param.entity.Needtaxcontrol">
+        select Needtaxcontrol.* from NEEDTAXCONTROL Needtaxcontrol where 1=1 <if test="id!=null">and ID=#{id}</if>
+        <if test="other!=null"> and OTHER = #{other} </if><if test="deadline!=null"> and DEADLINE = #{deadline} </if><if test="beer!=null"> and BEER = #{beer} </if><if test="yellow!=null"> and YELLOW = #{yellow} </if><if test="white!=null"> and WHITE = #{white} </if><if test="needtax!=null"> and NEEDTAX = #{needtax} </if><if test="ent!=null"> and ENT = #{ent} </if><if test="credit!=null"> and CREDIT_ = #{credit} </if>    </select>
+
+	<select id="findByPage" resultMap="Needtaxcontrol" parameterType="org.gecko.framework.param.entity.Needtaxcontrol">
+		select Needtaxcontrol.* from NEEDTAXCONTROL Needtaxcontrol where 1=1 <if test="param.id!=null">and ID=#{id}</if>
+		<if test="param.other!=null"> and OTHER = #{param.other} </if><if test="param.deadline!=null"> and DEADLINE = #{param.deadline} </if><if test="param.beer!=null"> and BEER = #{param.beer} </if><if test="param.yellow!=null"> and YELLOW = #{param.yellow} </if><if test="param.white!=null"> and WHITE = #{param.white} </if><if test="param.needtax!=null"> and NEEDTAX = #{param.needtax} </if><if test="param.ent!=null"> and ENT = #{param.ent} </if><if test="param.credit!=null"> and CREDIT_ = #{param.credit} </if>	</select>
+
+    <select id="likeByPage" resultMap="Needtaxcontrol" parameterType="org.gecko.framework.param.entity.Needtaxcontrol">
+        select Needtaxcontrol.* from NEEDTAXCONTROL Needtaxcontrol where 1=1
+        <if test="param.other!=null"> and OTHER like #{param.other}</if><if test="param.deadline!=null"> and DEADLINE like #{param.deadline}</if><if test="param.beer!=null"> and BEER like #{param.beer}</if><if test="param.yellow!=null"> and YELLOW like #{param.yellow}</if><if test="param.white!=null"> and WHITE like #{param.white}</if><if test="param.needtax!=null"> and NEEDTAX like #{param.needtax}</if><if test="param.ent!=null"> and ENT like #{param.ent}</if><if test="param.credit!=null"> and CREDIT_ like #{param.credit}</if>    </select>
+
+    <update id="updateField" parameterType="String">
+        UPDATE NEEDTAXCONTROL SET ${field} = #{value} WHERE ID = #{pk}
+    </update>
+</mapper>
