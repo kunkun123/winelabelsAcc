@@ -396,7 +396,7 @@
                 </configuration>
             </plugin>
 
-            <!--远程部署-->
+            <!--远程部署1-->
             <plugin>
                 <!-- 3个可用插件 -->
                 <!--<groupId>org.apache.tomcat.maven</groupId>-->
